@@ -535,7 +535,7 @@
                 }
             }
             for (CGFloat yValue = 0; yValue < graphH+1; yValue += ystep) {
-                if ((yValue == 0) && (self.XAxis.drawAxisLineEnabled)) {
+                if ((yValue == 0) && (self.XAxis.drawAxisLineEnabled) && (self.XAxis.enabled)) {
                     continue;
                 }
                 CGFloat baseLineY, starX, endX;

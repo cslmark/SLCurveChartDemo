@@ -18,6 +18,13 @@
 @property (nonatomic, strong) NSMutableArray* tempArray0;
 @property (nonatomic, strong) NSMutableArray* tempArray1;
 @property (nonatomic, strong) SLGCDTimer timer;
+
+- (IBAction)enableXscaleClick:(UIButton *)sender;
+- (IBAction)enableDynamicYAxisClick:(UIButton *)sender;
+- (IBAction)hiddenLeftYAxisClick:(UIButton *)sender;
+- (IBAction)hiddenRightAxisClick:(UIButton *)sender;
+- (IBAction)hiddenXAxisClick:(UIButton *)sender;
+- (IBAction) curveOrStrightClick:(UIButton *)sender;
 @end
 
 @implementation ViewController
@@ -84,7 +91,7 @@
     [self.myView setVisibleXRangeMinimum:@(2)];
     [self.myView setVisibleXRangeDefaultmum:@(10)];
     //直接调用Set方法和refreashDataSourceRestoreContext 和该方法等效
-    self.myView.datasource = _dataset;
+    [self.myView refreashDataSourceRestoreContext:_dataset];
 }
 
 -(NSMutableArray*) tempArray0{
@@ -117,8 +124,66 @@
     return _tempArray1;
 }
 
+#pragma mark - 按键处理
+- (IBAction)enableXscaleClick:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        [self.myView setScaleXEnabled:@(NO)];
+    }else{
+        [self.myView setScaleXEnabled:@(YES)];
+    }
+}
 
+- (IBAction)enableDynamicYAxisClick:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        [self.myView setDynamicYAixs:@(YES)];
+    }else{
+        [self.myView setDynamicYAixs:@(NO)];
+    }
+}
 
+- (IBAction)hiddenLeftYAxisClick:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        self.myView.leftYAxis.enabled = NO;
+        [self.myView refreashDataSourceRestoreContext:self.dataset];
+    }else{
+        self.myView.leftYAxis.enabled = YES;
+        [self.myView refreashDataSourceRestoreContext:self.dataset];
+    }
+}
 
+- (IBAction)hiddenRightAxisClick:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        self.myView.rightYAxis.enabled = NO;
+        [self.myView refreashDataSourceRestoreContext:self.dataset];
+    }else{
+        self.myView.rightYAxis.enabled = YES;
+        [self.myView refreashDataSourceRestoreContext:self.dataset];
+    }
+}
+
+- (IBAction)hiddenXAxisClick:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        self.myView.XAxis.enabled = NO;
+        [self.myView refreashDataSourceRestoreContext:self.dataset];
+    }else{
+        self.myView.XAxis.enabled = YES;
+        [self.myView refreashDataSourceRestoreContext:self.dataset];
+    }
+}
+
+- (IBAction) curveOrStrightClick:(UIButton *)sender{
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        _dataset.mode = brokenLineMode;
+    }else{
+        _dataset.mode = curveLineMode;
+    }
+    [self.myView refreashGraph];
+}
 
 @end
