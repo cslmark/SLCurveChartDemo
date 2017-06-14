@@ -22,7 +22,7 @@ A Easy Way to draw a curve chart for iOS!
 ## 使用说明
 目前还未上传到cocoapod所以只能通过源码集成
 Lib文件夹如下：
-![image](/Users/smart/Desktop/WX20170614-173616@2x.png
+![image](https://github.com/cslmark/SLCurveChartDemo/blob/master/CurveShowPics/WX20170614-173616@2x.png
 )
 
 API的调用和具体参照DEMO，如果通过代码创建的UIView还是通过Xib、Storyboard来创建。只需要改View的类是BaseCurveView就能轻松实现作图的功能，其中曲线颜色，线宽，X轴，Y轴的字体，颜色，网格的实线，虚线均可以灵活配置。
