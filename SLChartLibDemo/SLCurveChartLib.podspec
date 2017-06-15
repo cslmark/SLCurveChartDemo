@@ -10,7 +10,8 @@ Pod::Spec.new do |s|
   s.author             = { "cslmark" => "chensl@hadlinks.com" }
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/cslmark/SLCurveChartDemo.git", :tag => "#{s.version}"}
-  s.source_files  = "SLChartLibDemo/SLCurveChartLib/*.{h,m}","SLChartLibDemo/SLCurveChartLib/.{h,m}"
+  s.source_files  = "SLChartLibDemo/SLCurveChartLib/*.{h,m}","SLChartLibDemo/SLCurveChartLib/Category/*.{h,m}","SLChartLibDemo/SLCurveChartLib/ChartView/*.{h,m}",
+"SLChartLibDemo/SLCurveChartLib/Components/*.{h,m}","SLChartLibDemo/SLCurveChartLib/Data/*.{h,m}","SLChartLibDemo/SLCurveChartLib/Data/Standard/*.{h,m}","SLChartLibDemo/SLCurveChartLib/Interface/*.{h,m}","SLChartLibDemo/SLCurveChartLib/UtilTool/*.{h,m}","SLChartLibDemo/SLCurveChartLib/UtilTool/*"
   s.framework  = "Foundation","UIKit"
   s.requires_arc = true
 end
