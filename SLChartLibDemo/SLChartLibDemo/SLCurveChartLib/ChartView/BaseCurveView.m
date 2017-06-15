@@ -561,33 +561,44 @@
 //绘制hight
 -(void) drawHightLight:(ChartHighlight *) hightLight context:(CGContextRef) ctx{
     CGContextSaveGState(ctx);
-    CGContextClipToRect(ctx, CGRectMake(leftYAxisW, 0, graphW, graphW));
+    CGContextClipToRect(ctx, CGRectMake(leftYAxisW, 0, graphW, myH));
     if (hightLight.enabled) {
         if ((hightLight.dataIndex >= drawFromIndex) && (hightLight.dataIndex <= drawToIndex)) {
             CGFloat ypixunit = (myH - ybottom - ytop)/(maxY - minY);
             ChartDataEntry* data = [self.datasource entryForIndex:(int)hightLight.dataIndex];
             CGFloat pointX = leftYAxisW + drawFromX + (hightLight.dataIndex-drawFromIndex) * xstep;
             CGFloat pointY = myH - ((data.y - minY) * ypixunit)- ybottom;
-            CGFloat remainH = 29.5;
-            CGFloat remainW = 50;
-            CGFloat remainX = (pointX - remainW/2);
-            CGFloat remainY = pointY-21-[_datasource circleRadius]- 2- 6;
-            CGFloat tempMaxY = (myH - ybottom);
-            if(remainY > tempMaxY){
-                remainY = tempMaxY;
+            self.hightLight.drawX = pointX;
+            self.hightLight.drawY = pointY;
+            self.hightLight.yPx = pointY;
+            self.hightLight.x = data.x;
+            self.hightLight.y = data.y;
+            CGRect bounds = CGRectMake(0, 0, myW, myH);
+            UIEdgeInsets insets = UIEdgeInsetsMake(ytop, leftYAxisW, ybottom, rightYAxisW);
+            if ([self.hightLight.delegate respondsToSelector:@selector(chartHighlight:context:bounds:edageInsets:)]) {
+                [self.hightLight.delegate chartHighlight:self.hightLight context:ctx bounds:bounds edageInsets:insets];
+            }else{   //默认提供的一种提示的方法
+                CGFloat remainH = 29.5;
+                CGFloat remainW = 50;
+                CGFloat remainX = (pointX - remainW/2);
+                CGFloat remainY = pointY-21-[_datasource circleRadius]- 2- 6;
+                CGFloat tempMaxY = (myH - ybottom);
+                if(remainY > tempMaxY){
+                    remainY = tempMaxY;
+                }
+                NSString* yLabelStr = [NSString stringWithFormat:@"%0.0lf",data.y];
+                CGFloat showW = 40.0;
+                CGFloat showdowX = remainX + remainW/2 - showW/2;
+                CGRect indexRect = CGRectMake(showdowX, remainY, showW, remainH);
+                UIImage* image = [UIImage imageNamed:@"statistics_data_bg"];
+                [image drawInRect:indexRect];
+                
+                NSDictionary* attrs = [self getAttributesWithfont:[UIFont systemFontOfSize:11.0] Color:[UIColor whiteColor]];
+                CGSize size = [yLabelStr sizeWithAttributes:attrs];
+                CGFloat labelX = remainX + remainW/2 - size.width/2;
+                CGFloat labelY = remainY + remainH/2 - size.height/2 - 3;
+                [yLabelStr drawInRect:CGRectMake(labelX, labelY, size.width, size.height) withAttributes:attrs];
             }
-            NSString* yLabelStr = [NSString stringWithFormat:@"%0.0lf",data.y];
-            CGFloat showW = 40.0;
-            CGFloat showdowX = remainX + remainW/2 - showW/2;
-            CGRect indexRect = CGRectMake(showdowX, remainY, showW, remainH);
-            UIImage* image = [UIImage imageNamed:@"statistics_data_bg"];
-            [image drawInRect:indexRect];
-            
-            NSDictionary* attrs = [self getAttributesWithfont:[UIFont systemFontOfSize:11.0] Color:[UIColor whiteColor]];
-            CGSize size = [yLabelStr sizeWithAttributes:attrs];
-            CGFloat labelX = remainX + remainW/2 - size.width/2;
-            CGFloat labelY = remainY + remainH/2 - size.height/2 - 3;
-            [yLabelStr drawInRect:CGRectMake(labelX, labelY, size.width, size.height) withAttributes:attrs];
         }else{
         }
     }
@@ -753,12 +764,8 @@
 -(void) tapGes:(UITapGestureRecognizer *) tapGes{
     if (self.hightLight.enabled) {
         CGPoint startPos = [tapGes locationInView:tapGes.view];
-        
         CGFloat x = startPos.x;
         if ((x > leftYAxisW) && ( x < myW - rightYAxisW)) {
-            self.hightLight.drawX = startPos.x;
-            self.hightLight.drawY = startPos.y;
-            
             self.hightLight.xPx = (startPos.x - leftYAxisW) + fromX;
             int localx = self.hightLight.xPx - xleft;
             int index = ((localx+0.5*xstep)/ xstep);

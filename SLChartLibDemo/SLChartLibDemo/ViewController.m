@@ -11,6 +11,7 @@
 #import "XAxisFormtter.h"
 #import "YAxisFormtter.h"
 #import "YRightAxisFormtter.h"
+#import "HighLightFormatter.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet BaseCurveView *myView;
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray* tempArray0;
 @property (nonatomic, strong) NSMutableArray* tempArray1;
 @property (nonatomic, strong) SLGCDTimer timer;
+@property (nonatomic, strong) HighLightFormatter *highLightFor;
 
 - (IBAction)enableXscaleClick:(UIButton *)sender;
 - (IBAction)enableDynamicYAxisClick:(UIButton *)sender;
@@ -70,6 +72,8 @@
     ChartHighlight* highLight = [[ChartHighlight alloc] init];
     highLight.dataIndex = 5;
     highLight.enabled = YES;
+    self.highLightFor = [[HighLightFormatter alloc] init];
+    highLight.delegate = self.highLightFor;
     self.myView.hightLight = highLight;
     
     _dataset = [[SLLineChartDataSet alloc] initWithValues:self.tempArray1 label:@"Default"];
@@ -185,5 +189,8 @@
     }
     [self.myView refreashGraph];
 }
+
+
+
 
 @end
