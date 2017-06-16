@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   It is a marquee view used on iOS, which implement by Objective-C.
                    DESC
   s.homepage     = "https://github.com/cslmark/SLCurveChartDemo"
-  s.license      = "MIT"
+  s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "cslmark" => "chensl@hadlinks.com" }
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/cslmark/SLCurveChartDemo.git", :tag => "#{s.version}"}
