@@ -4,12 +4,14 @@ A Easy Way to draw a curve chart for iOS!
 # 请移架新的代码库地址，该库不再更新了维护了
 *https://github.com/cslmark/SLCurveChartLib*
 
-##重要的事情说三遍，本地址不在维护，新的仓库地址为
+
+重要的事情说三遍，本地址不在维护，新的仓库地址为
+
 >https://github.com/cslmark/SLCurveChartLib
 >https://github.com/cslmark/SLCurveChartLib
 >https://github.com/cslmark/SLCurveChartLib
 
-##cocoapod集成
+cocoapod集成
 >pod 'SLCurveChartLib', '~> 1.0.2'
 
 ## 效果展示
